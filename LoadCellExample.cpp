@@ -5,17 +5,20 @@
 
 void main(int argc, char* argv[])
 {
-	int dataInterval = 30;
-	LoadCell sensor = LoadCell(dataInterval);
+	int dataInterval = 10;
+	LoadCell sensor1 = LoadCell(dataInterval, BRIDGE_GAIN_1, 1);
+	LoadCell sensor2 = LoadCell(dataInterval, BRIDGE_GAIN_1, 0);
 
-	double measurement = 0;
+	double measurement1 = 0;
+	double measurement2 = 0;
+
 	int counter = 0;
 	while (1)
 	{
-		sensor.getMeasurement(measurement);
-		::std::cout << "counter:" << ::std::to_string(counter++) << "\t sensor value =" << measurement << ::std::endl;
-
-		Sleep(30);
+		sensor1.getMeasurement(measurement1);
+		sensor2.getMeasurement(measurement2);
+		::std::cout  << "sensor 1 value =" << measurement1 << "\t sensor 2 value =" << measurement2 << ::std::endl;
+		Sleep(100);
 	}
 
 }

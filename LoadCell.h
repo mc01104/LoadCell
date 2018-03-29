@@ -36,12 +36,14 @@ class LoadCell
 		double current_measurement;
 
 		int dataInterval; 
+
+		int channel;
 		
 		PhidgetVoltageRatioInput_BridgeGain bridgeGain;
 
 	public:
 
-		LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain = BRIDGE_GAIN_1);
+		LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain = BRIDGE_GAIN_1, int channel = 1);
 
 		~LoadCell();
 

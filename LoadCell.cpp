@@ -2,7 +2,7 @@
 
 std::mutex sensorLock;  
 
-LoadCell::LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain)
+LoadCell::LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain, int channel) : channel(channel)
 {
 
 	this->dataInterval = dataInterval; 
@@ -88,7 +88,7 @@ PhidgetReturnCode
 LoadCell::initialize(PhidgetHandle ch)
 {
 	PhidgetReturnCode res;
-	res = Phidget_setChannel(ch, 1); 
+	res = Phidget_setChannel(ch, this->channel); 
 
 	res = Phidget_setOnAttachHandler(ch, LoadCell::onAttachHandler, this);
 	if (res != EPHIDGET_OK) 
@@ -211,5 +211,5 @@ void CCONV LoadCell::onVoltageRatioChangeHandler(PhidgetVoltageRatioInputHandle 
 
 double LoadCell::voltageRatioToForce(double voltageRatio)
 {
-	return 1.0;		// STUB
+	return -9.1828 * voltageRatio * 1.e03 - 22.339;		// STUB;		
 }
