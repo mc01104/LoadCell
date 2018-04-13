@@ -41,9 +41,11 @@ class LoadCell
 		
 		PhidgetVoltageRatioInput_BridgeGain bridgeGain;
 
+		double (*calibrationFunction)(double voltageRatio);
+
 	public:
 
-		LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain = BRIDGE_GAIN_1, int channel = 1);
+		LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain = BRIDGE_GAIN_1, int channel = 1, double (*calibration_function)(double voltageToForce) = NULL);
 
 		~LoadCell();
 
@@ -63,5 +65,8 @@ class LoadCell
 
 		void setMeasurement(double meas) {this->current_measurement = meas;};
 
-		double voltageRatioToForce(double voltageRatio);
+		
 };
+
+double voltageRatioToForce(double voltageRatio);
+double voltageRatioToForce2(double voltageRatio);

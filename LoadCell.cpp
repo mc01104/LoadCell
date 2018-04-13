@@ -2,8 +2,13 @@
 
 std::mutex sensorLock;  
 
-LoadCell::LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain, int channel) : channel(channel)
+LoadCell::LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeGain, int channel, double (*calibration_function)(double voltageToForce)) : channel(channel)
 {
+
+	if (!calibration_function)
+		this->calibrationFunction = voltageRatioToForce;
+	else
+		this->calibrationFunction = calibration_function;
 
 	this->dataInterval = dataInterval; 
 		
@@ -204,12 +209,17 @@ void CCONV LoadCell::onVoltageRatioChangeHandler(PhidgetVoltageRatioInputHandle 
 {
 	LoadCell* cellPtr = reinterpret_cast<LoadCell*> (ctx);
 	sensorLock.lock();
-	cellPtr->setMeasurement(cellPtr->voltageRatioToForce(ratio));
+	cellPtr->setMeasurement(cellPtr->calibrationFunction(ratio));
 	sensorLock.unlock();
 }
 
 
-double LoadCell::voltageRatioToForce(double voltageRatio)
+double voltageRatioToForce(double voltageRatio)
 {
 	return -9.1828 * voltageRatio * 1.e03 - 22.339;		// STUB;		
+}
+
+double voltageRatioToForce2(double voltageRatio)
+{
+	return 10e04 * voltageRatio - 6.1;		// STUB;		
 }
