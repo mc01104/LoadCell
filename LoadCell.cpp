@@ -56,9 +56,13 @@ LoadCell::LoadCell(int dataInterval, PhidgetVoltageRatioInput_BridgeGain bridgeG
 		}
 	}
 
-	res = PhidgetVoltageRatioInput_setBridgeGain(ch, BRIDGE_GAIN_1);
+	res = PhidgetVoltageRatioInput_setBridgeGain(ch, this->bridgeGain);
 	PhidgetVoltageRatioInput_BridgeGain gain;
 	PhidgetVoltageRatioInput_getBridgeGain(ch, &gain);
+
+	uint32_t interval = -1;
+	res = PhidgetVoltageRatioInput_setDataInterval(ch, this->dataInterval);
+	res = PhidgetVoltageRatioInput_getDataInterval(ch, &interval);
 
 	res = Phidget_getDeviceID((PhidgetHandle)ch, &deviceID);
 	if (res != EPHIDGET_OK) 

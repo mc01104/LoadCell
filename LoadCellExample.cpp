@@ -22,8 +22,8 @@
 void main(int argc, char* argv[])
 {
 	int dataInterval = 10;
-	LoadCell sensor1 = LoadCell(dataInterval, BRIDGE_GAIN_1, 1);
-	LoadCell sensor2 = LoadCell(dataInterval, BRIDGE_GAIN_1, 0, voltageRatioToForce2);
+	LoadCell sensor1 = LoadCell(dataInterval, BRIDGE_GAIN_128, 1);
+	LoadCell sensor2 = LoadCell(dataInterval, BRIDGE_GAIN_128, 0, voltageRatioToForce2);
 
 	::std::string filename = GetDateString() + ".txt";
 	::std::ofstream os(filename);
